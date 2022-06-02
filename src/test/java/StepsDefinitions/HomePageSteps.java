@@ -1,32 +1,37 @@
 package StepsDefinitions;
 
 
+import Utils.TestContextSetup;
 import PageFactory.HomePage_PF;
-import BaseUtil.BaseClass;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
 
-public class HomePageSteps extends BaseClass {
 
-    WebDriver driver = getDriver();
-
-    @Given("^user enters the (.*) and hit enter$")
-    public void user_enters_the_google_search(String url) {
-        driver.navigate().to(url);
+public class HomePageSteps {
+    WebDriver driver;
+    TestContextSetup testContextSetup;
+    public HomePageSteps(TestContextSetup testContextSetup) {
+        this.testContextSetup = testContextSetup;
     }
+    @Given("^user opened url to \"([^\"]*)\"$")
+    public void user_enters_the_google_search(String url) {
+      testContextSetup.genericUtils.getCurrentUrl(url);
+    }
+
     @When("^user search in the text (.*) and hit enter$")
-    public void user_search_in_the_text_and_hit_enter(String searchItem) {
-        HomePage_PF home = new HomePage_PF(driver);
-        home.typeInSearchBox(searchItem);
+    public void user_search_in_the_text_and_hit_enter(String searchItem) throws IOException {
+        HomePage_PF homePage_pf = testContextSetup.pageObjectManager.getHomePage();
+        homePage_pf.typeInSearchBox(searchItem);
     }
 
     @Then("^user should be in the Search page (.*) and (.*)$")
     public void user_should_be_in_the_Search_page(String url, String searchItem) {
-        driver.getPageSource().equals(searchItem);
-        driver.getCurrentUrl().equals(url);
-        System.out.println("Close browser");
+        testContextSetup.genericUtils.getCurrentUrl(url);
+        testContextSetup.genericUtils.getPageSource(searchItem);
     }
 }

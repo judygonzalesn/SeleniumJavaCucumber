@@ -1,30 +1,28 @@
 package StepsDefinitions;
 
-import BaseUtil.BaseClass;
+import Utils.BaseClass;
+import Utils.TestContextSetup;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class Hooks extends BaseClass {
-    BaseClass base = new BaseClass();
-    WebDriver driver = base.getDriver();
+import java.io.IOException;
 
+public class Hooks {
+
+    TestContextSetup testContextSetup;
+
+    public Hooks(TestContextSetup testContextSetup) {
+        this.testContextSetup = testContextSetup;
+    }
 
     @Before
-    public void InitializeTest(){
-        System.out.println("Open browser");
-        String projectPath = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver",
-                projectPath + "/src/test/resources/Drivers/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver .manage().window().maximize();
-        base.setWebDriver(driver);
+    public void InitializeTest() throws IOException {
+    testContextSetup.baseClass.WebDriverManager();
     }
 
     @After
-    public void Close() {
-        System.out.println("Close browser");
-        driver .quit();
+    public void Close() throws IOException {
+        testContextSetup.baseClass.WebDriverManager().quit();
     }
 }

@@ -1,30 +1,25 @@
 package PageFactory;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.CacheLookup;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
+import Helpers.UIHelpers;
+import Utils.BaseClass;
+import Utils.TestContextSetup;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePage_PF {
-    WebDriver driver;
-
-    public HomePage_PF(WebDriver driver)
-    {
+public class HomePage_PF extends BaseClass {
+private TestContextSetup testContextSetup;
+    public WebDriver driver;
+    public HomePage_PF(WebDriver driver)  {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(how = How.NAME, using ="q")
-    @CacheLookup
-    private  WebElement searchBox;
+    By search_TxtBox = By.name("q");
+    UIHelpers uiHelpers = new UIHelpers(getWebDriver());
+    private WebElement search_TextBox = uiHelpers.WaitForElement(search_TxtBox,0,0);
 
 
-
-    public void typeInSearchBox(String SearchItem)
-    {
-        searchBox.sendKeys(SearchItem);
-        searchBox.sendKeys(Keys.ENTER);
+    public void typeInSearchBox(String SearchItem) {
+        driver.findElement(search_TxtBox).sendKeys(SearchItem);
+        driver.findElement(search_TxtBox).sendKeys(Keys.ENTER);
     }
 }
