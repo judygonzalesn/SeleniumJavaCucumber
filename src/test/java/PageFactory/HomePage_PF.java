@@ -13,9 +13,8 @@ private TestContextSetup testContextSetup;
         PageFactory.initElements(driver, this);
     }
 
-    By search_TxtBox = By.name("q");
     UIHelpers uiHelpers = new UIHelpers(getWebDriver());
-    private WebElement search_TextBox = uiHelpers.WaitForElement(search_TxtBox,0,0);
+    private By search_TxtBox = uiHelpers.WaitForElement(By.name("q"),0,0);
 
 
     public void typeInSearchBox(String SearchItem) {

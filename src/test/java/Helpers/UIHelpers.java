@@ -22,7 +22,7 @@ WebDriver driver;
 //    }
 
 
-    public WebElement WaitForElement(By locator, int timeOut, int polling) {
+    public By WaitForElement(By locator, int timeOut, int polling) {
 
         if (timeOut == 0) {
             timeOut = 30;
@@ -36,7 +36,9 @@ WebDriver driver;
                 .pollingEvery(Duration.ofMillis(polling))
                 .ignoring(NoSuchElementException.class);
 
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
+        return locator;
     }
 
 
@@ -64,10 +66,10 @@ WebDriver driver;
 
 
     public void Click(By locator, int timeOut, int polling) {
-        WebElement clickThis = WaitForElement(locator, timeOut, polling);
+        By clickThis = WaitForElement(locator, timeOut, polling);
         if (IsElementVisible(locator,timeOut,polling))
         {
-            clickThis.click();
+            driver.findElement(clickThis).click();
         }
     }
 }
