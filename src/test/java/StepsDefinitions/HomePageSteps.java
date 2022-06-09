@@ -7,6 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -15,12 +16,14 @@ import java.io.IOException;
 public class HomePageSteps {
     WebDriver driver;
     TestContextSetup testContextSetup;
+
     public HomePageSteps(TestContextSetup testContextSetup) {
         this.testContextSetup = testContextSetup;
     }
+
     @Given("^user opened url to \"([^\"]*)\"$")
     public void user_enters_the_google_search(String url) {
-      testContextSetup.genericUtils.getCurrentUrl(url);
+        Assert.assertTrue(testContextSetup.genericUtils.getCurrentUrl(url));
     }
 
     @When("^user search in the text (.*) and hit enter$")
@@ -31,7 +34,7 @@ public class HomePageSteps {
 
     @Then("^user should be in the Search page (.*) and (.*)$")
     public void user_should_be_in_the_Search_page(String url, String searchItem) {
-        testContextSetup.genericUtils.getCurrentUrl(url);
-        testContextSetup.genericUtils.getPageSource(searchItem);
+        Assert.assertTrue(testContextSetup.genericUtils.getCurrentUrl(url));
+        Assert.assertTrue(testContextSetup.genericUtils.getPageSource(searchItem));
     }
 }
