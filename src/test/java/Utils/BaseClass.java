@@ -16,7 +16,7 @@ public class BaseClass {
     // Getter
     public WebDriver WebDriverManager() throws IOException {
         if (Driver == null) {
-            FileInputStream fis = new FileInputStream(projectPath + "/src/test/resources/Resources/Global.properties");
+            FileInputStream fis = new FileInputStream(projectPath + "/src/test/resources/Global.properties");
             Properties prop = new Properties();
             prop.load(fis);
             String url = prop.getProperty("QAUrl");
